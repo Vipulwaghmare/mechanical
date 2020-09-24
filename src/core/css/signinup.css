@@ -1,0 +1,38 @@
+.signin-main{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    min-height: 90vh;
+    background-color: #0A79DF;
+}
+.signin-div{
+    padding: 2em;
+    border-radius: 5px;
+    background-color: whitesmoke;
+}
+.signin-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.signin-input{
+    display: block;
+    width: 100%;
+    margin-top: 1em;
+    height: 20px;
+}
+.signin-submit{
+    background-color: #1BCA9B;
+    border: 1px;
+    border-radius: 5px;
+    height: 20px;
+}
+.signin-submit:hover{
+    background-color:#218F76;
+    color: white;
+}
+.signin-p{
+    margin-top: 0.5em;
+}

@@ -1,0 +1,54 @@
+/* Calculator position is defined in app.css */
+.calc-main{
+    width: 655px;
+    background-color:#A4B0BD;
+    padding: 0 5px 5px 5px;
+    border: 1px black solid;
+    border-radius: 3px;
+}
+.calc-title{
+    background-color: #4834DF;
+    color: white;
+    text-align: left;
+    padding-left: 1em;
+    padding-top: 0.1em;
+    margin: 0 -5px;
+}
+.top-screen{
+    margin: 0 auto;
+    margin-top: 10px;
+    display: block;
+    width: 90%;
+    text-align: right;
+}
+.bottom-screen{
+    margin: 0 auto;
+    margin-top: 10px;
+    display: block;
+    width: 90%;
+    text-align: right;
+}
+button{
+    width: 55px;
+    border-radius: 3px;
+    height: 25px;
+}
+button + button{
+    margin-left: 5px;
+}
+.big-button{
+    width: 115px; /* button width * 2 + margin */
+}
+.tall-button{
+    position: absolute;
+    height: 64px;
+    background-color: #2ecc72;
+}
+.lines{
+    margin: 0 auto;
+    margin-top: 10px;
+}
+.calc-first{
+    display: flex;
+    justify-content: space-between;
+}

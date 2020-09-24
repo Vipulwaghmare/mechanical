@@ -1,0 +1,7 @@
+.syllabus-main{
+    display: flex;
+}
+.section-left{
+    background-color: teal;
+    width: 20%;
+}
