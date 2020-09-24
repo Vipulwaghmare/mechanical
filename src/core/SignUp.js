@@ -34,7 +34,7 @@ const SignUp = () => {
         } else {
             signup({firstName, lastName, email, password, phoneNumber})
                 .then(data => {
-                    if(false){
+                    if(data.error){
                         setValues({
                             ...values,
                             error: data.error
