@@ -167,21 +167,42 @@ class Calculator extends React.Component{
                 })
                 break;
             case "sininv": 
+                if(this.state.degree){
+                    this.setState({
+                        topScreen: `asin(${number})`,
+                        bottomScreen: 180 * Math.asin(number) / Math.PI
+                    })
+                    break;
+                }
                 this.setState({
-                    topScreen: `asin(${angle})`,
-                    bottomScreen: Math.asin(angle)
+                    topScreen: `asin(${number})`,
+                    bottomScreen: Math.asin(number)
                 })
                 break;
             case "cosinv":
+                if(this.state.degree){
+                    this.setState({
+                        topScreen: `acos(${number})`,
+                        bottomScreen: 180 * Math.acos(number) / Math.PI
+                    })
+                    break;
+                }
                 this.setState({
-                    topScreen: `acos(${angle})`,
-                    bottomScreen: Math.acos(angle)
+                    topScreen: `acos(${number})`,
+                    bottomScreen: Math.acos(number)
                 })
                 break;
             case "taninv":
+                if(this.state.degree){
+                    this.setState({
+                        topScreen: `atan(${number})`,
+                        bottomScreen: 180 * Math.atan(number) / Math.PI
+                    })
+                    break;
+                }
                 this.setState({
-                    topScreen: `atan(${angle})`,
-                    bottomScreen: Math.atan(angle)
+                    topScreen: `atan(${number})`,
+                    bottomScreen: Math.atan(number)
                 })
                 break;
             case "sqrt":

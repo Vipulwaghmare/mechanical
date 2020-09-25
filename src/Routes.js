@@ -6,6 +6,7 @@ import SignIn from './core/SignIn';
 import SignUp from './core/SignUp';
 import Home from './core/Home';
 import SyllabusHome from './core/Syllabus/SyllabusHome';
+import AddSubjects from './core/Admin/addSubjects';
 
 const Routes = () => {
     return(
@@ -17,6 +18,7 @@ const Routes = () => {
                 <Route path="/syllabus" exact component={SyllabusHome} />
                 <Route path="/gate" exact component={GateHome} />
                 <Route path="/ese" exact component={EseHome} />
+                <Route path="/addsubject" exact component={AddSubjects} />
             </Switch>
         </BrowserRouter>
     )

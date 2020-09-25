@@ -1,13 +1,13 @@
 import React, {useState} from 'react';
 import { Link } from 'react-router-dom';
-import { signin } from './Backend/auth';
+import { signin, authenticate } from './Backend/auth';
 import Base from './Base';
 import './css/signinup.css';
 
 const SignIn = () => {
     const [values, setValues ] = useState({
-        email: "",
-        password: "",
+        email: "vipulwaghmare222@gmail.com",
+        password: "12345678",
         error: ''
     })
 
@@ -30,11 +30,23 @@ const SignIn = () => {
                         ...values,
                         error: data.error
                     })
+                } else {
+                    authenticate(data, ()=>{
+                        setValues({
+                            ...values
+                        })
+                    })
                 }
             }).catch(setValues({
                 ...values,
-                error: "Error in logging in"
+                error: "Sign in request failed"
             }))
+    }
+
+    const errorMessage = () => {
+        return(
+            error && <div>{error}</div>
+        )
     }
 
     return(
@@ -42,6 +54,7 @@ const SignIn = () => {
         <div className="signin-main">
         <div className="signin-div">
             Sign in with your email and password
+            <div>{errorMessage()}</div>
             <form className="signin-form">
             <input 
                 type="email" 

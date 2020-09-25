@@ -36,3 +36,6 @@
 .signin-p{
     margin-top: 0.5em;
 }
+.nav-link{
+    cursor: pointer;
+}

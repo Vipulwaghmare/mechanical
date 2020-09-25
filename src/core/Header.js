@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import Calculator from './calculator/calculator';
+import { isAuthenticated, signout } from './Backend/auth';
 
 const Header = () => {
     const [showCal, setShowCal] = useState(false);
@@ -13,6 +14,51 @@ const Header = () => {
     const calculator = () => {
         return(
             showCal && <Calculator />
+        )
+    }
+
+    // components 
+    const SignIn = () => {
+        return (!isAuthenticated() && 
+            <li className="nav-li">
+            <Link className="nav-link" to="/signin">
+                Sign In
+            </Link>
+        </li>
+        )
+    }
+
+    const SignUp = () => {
+        return (
+            !isAuthenticated() &&
+                        <li className="nav-li">
+                        <Link className="nav-link" to="/signup">
+                            Sign Up
+                        </Link>
+                    </li>
+        )
+    }
+
+    const SignOut = () => {
+        return (
+            isAuthenticated() && 
+                        <li className="nav-li">
+                        <Link to="/" className="nav-link"
+                            onClick={()=>{signout(()=>{})}} >
+                            Sign Out
+                        </Link>
+                    </li>
+        )
+    }
+
+    const AddSubject = () => {
+        return(
+            isAuthenticated() && 
+            <li className="nav-li">
+                    <Link className="nav-link" to="/addsubject">
+                        Add Subject
+                    </Link>
+            </li>
         )
     }
 
@@ -40,21 +86,10 @@ const Header = () => {
                             ESE
                         </Link>
                     </li>
-                    <li className="nav-li">
-                        <Link className="nav-link" to="/signup">
-                            Sign Up
-                        </Link>
-                    </li>
-                    <li className="nav-li">
-                        <Link className="nav-link" to="/signin">
-                            Sign In
-                        </Link>
-                    </li>
-                    <li className="nav-li">
-                        <Link className="nav-link" to="/signout">
-                            Sign Out
-                        </Link>
-                    </li>
+                    <SignUp />
+                    <SignIn />
+                    <SignOut />
+                    <AddSubject />
                     <button 
                         onClick={handleClick}
                         className="calc-button"

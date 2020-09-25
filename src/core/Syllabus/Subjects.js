@@ -33,7 +33,7 @@ const Subjects= () => {
         console.log(props.subtopics)
         return(
             <div className="subject-name">
-                {props.name}
+                <b>{props.name}</b>
                 {props.subtopics.map((subtopic)=>{
                     return <SubTopics 
                         key={subtopic}

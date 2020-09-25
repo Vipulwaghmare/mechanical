@@ -31,12 +31,34 @@ export const signin = user => {
     })
 }
 
-export const signout = () => {
-    return fetch(`${API}/signout`,{
-        method: "GET",
-    }).then(response=>{
-        console.log("signout success")
-        return response.json
-    })
-    .catch(error=> console.log(error))
+export const signout = (next) => {
+    if(typeof window !== "undefined"){
+        localStorage.removeItem("jwt")
+        next()
+        return fetch(`${API}/signout`,{
+            method: "GET",
+        }).then(response=>{
+            console.log("signout success")
+            return response.json
+        })
+        .catch(error=> console.log(error))
+    }
+}
+
+export const authenticate = (data, next) => {
+    if(typeof window !== "undefined"){
+        localStorage.setItem("jwt", JSON.stringify(data))
+        next()
+    }
+}
+
+export const isAuthenticated = () => {
+    if(typeof window == "undefined"){
+        return false
+    } 
+    if(localStorage.getItem("jwt")){
+        return JSON.parse(localStorage.getItem("jwt"))
+    } else {
+        return false
+    }
 }

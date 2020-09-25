@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { API } from '../../backend';
 import Base from '../Base';
 
 const AddSubjects = () => {
@@ -6,10 +7,12 @@ const AddSubjects = () => {
     const [values, setValues ] = useState({
         name: "",
         shortName: "",
+        subtopic1: "",
+        subtopics: [],
         error: ""
     })
 
-    const { name, shortName } = values;
+    const { name, shortName, error, subtopics, subtopic1 } = values;
 
     const handleChange = event => {
         const { name, value } = event.target;
@@ -19,9 +22,33 @@ const AddSubjects = () => {
         })
     }
 
+    const createSubject = subject => {
+        return fetch(`${API}/create/subject`,{
+            method: "POST",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(subject)
+        })
+        .then(response => {
+            return response.json()
+        })
+        .catch(error=> console.log(error))
+    }
+
+    const handleSubtopic = (event) => {
+        event.preventDefault()
+        subtopics.push(subtopic1)
+        setValues({
+            ...values,
+            subtopic1: ""
+        })
+    }
+
     const handleSubmit = (event) => {
         event.preventDefault()
-        signup({firstName, lastName, email, password,phoneNumber})
+        createSubject({name, shortName, subtopics})
             .then(data => {
                 if(data.error){
                     setValues({
@@ -51,7 +78,7 @@ const AddSubjects = () => {
         <Base>
         <div className="signin-main">
             <div className="signin-div">
-                Sign up with your email and password
+                Add Subject
                 <div className="test"> {errorMessage()} </div>
                 <form className="signin-form">
                 <input 
@@ -70,14 +97,28 @@ const AddSubjects = () => {
                     onChange={handleChange}
                     className="signin-input"
                 ></input>
+                <input
+                    type="text" 
+                    name ="subtopic1"
+                    value={subtopic1}
+                    placeholder="Subtopic"
+                    onChange={handleChange}
+                    className="signin-input"
+                >
+                </input>
+                <button 
+                    onClick={handleSubtopic}
+                    className="signin-input signin-submit"
+                >
+                    Add subtopic
+                </button>
                 <input 
                     onClick={handleSubmit}
                     type="submit"
                     className="signin-input signin-submit"
                 ></input>
                 </form>
-            </div>
-            <p className="signin-p">Already have an account? <Link to="/signin" className="">Log in</Link></p>
+                </div>
             </div>
         </Base>
     )
