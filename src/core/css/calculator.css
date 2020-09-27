@@ -13,6 +13,15 @@
     padding-left: 1em;
     padding-top: 0.1em;
     margin: 0 -5px;
+    display: flex;
+    justify-content: space-between;
+}
+.close-button{
+    background-color: red;
+    margin: 1px 5px 2px 0;
+    width: 1em;
+    text-align: center;
+    cursor: pointer;
 }
 .top-screen{
     margin: 0 auto;

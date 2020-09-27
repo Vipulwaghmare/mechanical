@@ -1,9 +1,12 @@
 import React from 'react';
 import '../css/calculator.css'
 
+import { connect } from 'react-redux'
+import { HIDECALCULATOR } from '../Redux/action';
+
 class Calculator extends React.Component{
-    constructor(){
-        super()
+    constructor(props){
+        super(props)
         this.state = {
             topScreen: '',
             bottomScreen: '',
@@ -11,10 +14,12 @@ class Calculator extends React.Component{
             calcScreen: '', // hidden
             degree: true, // Angle is degree by default
             operation: false, // if any operations are goinh on +-*/
+            hide_calculator: props.hide_calculator,
         }
         this.changeAngle = this.changeAngle.bind(this)
         this.handleNumber = this.handleNumber.bind(this)
         this.clear = this.clear.bind(this)
+        this.backButton = this.backButton.bind(this)
         this.basicOperation = this.basicOperation.bind(this)
         this.singleOperation = this.singleOperation.bind(this)
         this.handleEval = this.handleEval.bind(this)
@@ -48,9 +53,18 @@ class Calculator extends React.Component{
     }
     // back button
     backButton = () => {
-        this.setState({
-            
-        })
+        let number = this.state.bottomScreen.slice(0,-1)
+        if(this.state.bottomScreen.length>1){
+            this.setState({
+                bottomScreen: number,
+                currentNumber: parseFloat(number)
+            })
+        } else {
+            this.setState({
+                bottomScreen: '',
+                currentNumber: 0
+            })
+        }
     }
     // sign change
     signChange = () => {
@@ -69,37 +83,44 @@ class Calculator extends React.Component{
     // handle Eval =
     handleEval= ()=>{
         const {topScreen, currentNumber} = this.state
-        let answer=eval(topScreen+currentNumber)
-        this.setState({
-            topScreen: topScreen + currentNumber,
-            bottomScreen: answer
-        })
+        let answer=eval(topScreen + currentNumber)
+        try {
+            this.setState({
+                topScreen: topScreen + currentNumber,
+                bottomScreen: answer
+            })
+        } catch {
+            this.setState({
+                bottomScreen: 'Error'
+            })
+        }
     }
     // Basic Operation + - / * 
     basicOperation = (e) => {
         const { bottomScreen } = this.state
+        let input = bottomScreen ? parseFloat(bottomScreen) : 0
         let {value} = e.target
         if(value === '+'){
             this.setState({
-                topScreen: bottomScreen + '+',
+                topScreen: input + '+',
                 bottomScreen: ''
             })
         }
         if(value === '-'){
             this.setState({
-                topScreen: bottomScreen + '-',
+                topScreen: input + '-',
                 bottomScreen: ''
             })
         }
         if(value === '*'){
             this.setState({
-                topScreen: bottomScreen + '*',
+                topScreen: input + '*',
                 bottomScreen: ''
             })
         }
         if(value === '/'){
             this.setState({
-                topScreen: bottomScreen + '/',
+                topScreen: input + '/',
                 bottomScreen: ''
             })
         }
@@ -302,7 +323,10 @@ class Calculator extends React.Component{
         return(
             <div className="test calc-main">
                 <div className="calc-title">
-                    Scientific Calculator
+                    <div>Scientific Calculator</div>
+                    <div className="close-button"
+                        onClick={()=>this.props.hidecalculator()}
+                    >x</div>
                 </div>
                 <input 
                     className="top-screen"
@@ -387,7 +411,9 @@ class Calculator extends React.Component{
                     <button>
                         )
                     </button>
-                    <button className="big-button test">
+                    <button 
+                        onClick={this.backButton}
+                        className="big-button test">
                         Back
                     </button>
                     <button 
@@ -637,4 +663,17 @@ class Calculator extends React.Component{
     }
 }
 
-export default Calculator;
+
+const mapStateToProps = (store) => {
+    return store
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return {
+        hidecalculator: ()=>dispatch({
+            type: HIDECALCULATOR
+        })
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Calculator);

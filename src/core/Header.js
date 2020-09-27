@@ -1,19 +1,25 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
 import Calculator from './calculator/calculator';
 import { isAuthenticated, signout } from './Backend/auth';
 
-const Header = () => {
-    const [showCal, setShowCal] = useState(false);
-    
-    const handleClick = () => {
-        setShowCal(!showCal)
-    }
+import { connect } from 'react-redux'
+import { HIDECALCULATOR } from './Redux/action';
+import SmallCalculator from './calculator/smallCalculator';
+
+const Header = (props) => {
 
     const calculator = () => {
         return(
-            showCal && <Calculator />
+            !props.hide_calculator && 
+            <div>
+            <div className="big-calc">
+            <Calculator />
+            </div>
+            <div className="small-calc">
+            <SmallCalculator />
+            </div>
+            </div>
         )
     }
 
@@ -62,6 +68,27 @@ const Header = () => {
         )
     }
 
+    const AddGateYear = () => {
+        return(
+            isAuthenticated() && 
+            <li className="nav-li">
+                    <Link className="nav-link" to="/addgate">
+                        Add Gate
+                    </Link>
+            </li>
+        )
+    }
+    const AddEseYear = () => {
+        return(
+            isAuthenticated() && 
+            <li className="nav-li">
+                    <Link className="nav-link" to="/addese">
+                        Add Ese
+                    </Link>
+            </li>
+        )
+    }
+
     return(
         <header className="header">
             <div className="header-title">
@@ -90,8 +117,10 @@ const Header = () => {
                     <SignIn />
                     <SignOut />
                     <AddSubject />
+                    <AddGateYear />
+                    <AddEseYear />
                     <button 
-                        onClick={handleClick}
+                        onClick={()=>props.hidecalculator()}
                         className="calc-button"
                     >
                         Calculator
@@ -105,4 +134,16 @@ const Header = () => {
     )
 }
 
-export default Header;
+const mapStateToProps = (store) => {
+    return store
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return {
+        hidecalculator: ()=>dispatch({
+            type: HIDECALCULATOR
+        })
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

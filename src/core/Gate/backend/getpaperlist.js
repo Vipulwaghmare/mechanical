@@ -1,7 +1,7 @@
 const { API } = require("../../../backend");
 
-export const getAllSubjects = () => {
-    return fetch(`${API}/allsubjects`,{
+export const getYears = () => {
+    return fetch(`${API}/getGateYears`,{
         method: "GET"
     }).then(response=>{
         return response.json()

@@ -2,18 +2,15 @@ import React, { useState } from 'react';
 import { API } from '../../backend';
 import Base from '../Base';
 
-const AddSubjects = () => {
+const AddEse = () => {
 
     const [values, setValues ] = useState({
-        name: "",
-        shortName: "",
-        subtopic1: "",
-        subtopics: [],
+        year: "",
         error: "",
         success: ""
     })
 
-    const { name, shortName, error, subtopics, subtopic1, success } = values;
+    const { year, error, success } = values;
 
     const handleChange = event => {
         const { name, value } = event.target;
@@ -23,8 +20,8 @@ const AddSubjects = () => {
         })
     }
 
-    const createSubject = subject => {
-        return fetch(`${API}/create/subject`,{
+    const AddYear = subject => {
+        return fetch(`${API}/addEse`,{
             method: "POST",
             headers: {
                 Accept: "application/json",
@@ -38,28 +35,9 @@ const AddSubjects = () => {
         .catch(error=> console.log(error))
     }
 
-    const handleSubtopic = (event) => {
-        event.preventDefault()
-        if(subtopic1 !== ""){
-            subtopics.push(subtopic1)
-            setValues({
-                ...values,
-                subtopic1: "",
-                success: `${subtopic1} added as subtopic`,
-                error: ""
-            })
-        } else {
-            setValues({
-                ...values,
-                error: "Enter a subtopic",
-                success: ""
-            })
-        }
-    }
-
     const handleSubmit = (event) => {
         event.preventDefault()
-        createSubject({name, shortName, subtopics})
+        AddYear({year})
             .then(data => {
                 if(data.error){
                     setValues({
@@ -69,14 +47,13 @@ const AddSubjects = () => {
                 } else {
                     setValues({
                         ...values,
-                        name: "",
-                        shortName: "",
+                        year: '',
                         error: '',
                         success: ''
                     })
                 }
             })
-            .catch(setValues({...values, error:"Error insignup"}))
+            .catch(setValues({...values, error:"Cant add year"}))
     }
 
     const errorMessage = (event) => {
@@ -99,7 +76,7 @@ const AddSubjects = () => {
         <Base>
         <div className="signin-main">
             <div className="signin-div">
-                Add Subject
+                Add Year
                 <div> 
                 {errorMessage()}
                 {successMessage()}
@@ -107,35 +84,12 @@ const AddSubjects = () => {
                 <form className="signin-form">
                 <input 
                     type="text" 
-                    name= "name"
-                    value ={name}
+                    name= "year"
+                    value ={year}
                     className="signin-input"
-                    placeholder="Subject Name"
+                    placeholder="Ese Year"
                     onChange={handleChange}
                 ></input>
-                <input 
-                    type="text" 
-                    name ="shortName"
-                    value={shortName}
-                    placeholder="subject short name"
-                    onChange={handleChange}
-                    className="signin-input"
-                ></input>
-                <input
-                    type="text" 
-                    name ="subtopic1"
-                    value={subtopic1}
-                    placeholder="Subtopic"
-                    onChange={handleChange}
-                    className="signin-input"
-                >
-                </input>
-                <button 
-                    onClick={handleSubtopic}
-                    className="signin-input signin-submit"
-                >
-                    Add subtopic
-                </button>
                 <input 
                     onClick={handleSubmit}
                     type="submit"
@@ -148,4 +102,4 @@ const AddSubjects = () => {
     )
 }
 
-export default AddSubjects
+export default AddEse;

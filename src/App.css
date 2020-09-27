@@ -34,6 +34,19 @@
   right: 5px;
   top: 5vh;
 }
+@media (min-width: 800px){  
+  .small-calc{
+    display: none;
+    z-index: 10;
+  }
+}
+@media (max-width: 800px){  
+  .big-calc{
+    display: none;
+    z-index: 10;
+  }
+}
+
 /* Main */
 .main{
   min-height: 90vh;
@@ -47,4 +60,10 @@
 }
 .test{
   background: red;
+}
+.errorMessage{
+  color: red;
+}
+.successMessage{
+  color: green;
 }

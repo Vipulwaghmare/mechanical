@@ -1,14 +1,15 @@
 import React, {useState, useEffect} from 'react';
+import { Link } from 'react-router-dom';
 import { getAllSubjects } from './backend/getallsubjects';
 
 const Subjects= () => {
-    
     const [subjects, setSubjects] = useState([])
     const [error, setError ] = useState(false)
-
+    const [showSubtopic, setShowSubtopic ] = useState(false)
+    const [currentSubject, setCurrentSubject] = useState("")
+    
     const subjectList = () => {
         getAllSubjects().then(data=>{
-            console.log(data)
             if(data.error){
                 setError(data.error)
             } else {
@@ -22,22 +23,31 @@ const Subjects= () => {
     },[])
 
     const SubTopics = (props) => {
-        return(
+        return( showSubtopic && currentSubject === props.name && 
             <div className="subject-subtopic">
-            {props.subtopic}
+                <li>
+                    <Link 
+                className="nav-link"
+                to={`/${props.subtopic}`}>
+                        {props.subtopic}
+                    </Link>
+                </li>
             </div>
         )
     }
     
     const MainSubject = (props) => {
-        console.log(props.subtopics)
         return(
             <div className="subject-name">
-                <b>{props.name}</b>
+                <b onClick={()=>{
+                    setShowSubtopic(true)
+                    setCurrentSubject(props.name)
+                    }}>{props.name}</b>
                 {props.subtopics.map((subtopic)=>{
                     return <SubTopics 
                         key={subtopic}
                         subtopic={subtopic}
+                        name={props.name}
                     />
                 })}
             </div>
@@ -55,7 +65,7 @@ const Subjects= () => {
                     />
                 )
             })}
-        </div>
+        </div> 
     )
 }
 

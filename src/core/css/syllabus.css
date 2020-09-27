@@ -5,3 +5,52 @@
     background-color: teal;
     width: 20%;
 }
+.subject-topics{
+    min-height: 90vh;
+}
+.subject-name{
+    cursor: pointer;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 1em;
+    margin: 0.5em;
+}
+.section-right{
+    padding: 1em;
+}
+@media (min-width: 601px){
+    .syllabus-menu{
+        display: none;
+    }
+}
+
+@media (max-width: 600px){
+    .syllabus-menu{
+        position: fixed;
+        bottom: 2em;
+        right: 1em;
+        background-color: black;
+        width: 3em;
+        height: 3em;
+        border-radius: 50%;
+        cursor: pointer;
+        z-index: 5;
+    }
+    .syllabus-main{
+        position: relative;
+    }
+    .section-left{
+        position: absolute;
+        width: 100%;
+    }
+    .section-left-hide{
+        display: none;
+    }
+    .section-left-show{
+        z-index: 2;
+    }
+    .section-right{
+        position: absolute;
+        width: 100%;
+    }
+}

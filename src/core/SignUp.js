@@ -59,7 +59,7 @@ const SignUp = () => {
 
     const errorMessage = (event) => {
         return(
-            <div>
+            <div className="errorMessage">
             {error}
             </div>
         )
@@ -67,7 +67,7 @@ const SignUp = () => {
 
     const successMessage = (event) => {
         return(
-            success && <div>
+            success && <div className="successMessage">
                 Signup successful
             </div>
         )
@@ -78,7 +78,7 @@ const SignUp = () => {
         <div className="signin-main">
             <div className="signin-div">
                 Sign up with your email and password
-                <div className="test"> {errorMessage()} {successMessage()} </div>
+                <div> {errorMessage()} {successMessage()} </div>
                 <form className="signin-form">
                 <input 
                     type="text" 

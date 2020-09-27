@@ -45,7 +45,7 @@ const SignIn = () => {
 
     const errorMessage = () => {
         return(
-            error && <div>{error}</div>
+            error && <div className="errorMessage">{error}</div>
         )
     }
 
