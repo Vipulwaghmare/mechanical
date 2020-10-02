@@ -1,13 +1,34 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Calculator from './calculator/calculator';
 import { isAuthenticated, signout } from './Backend/auth';
 
 import { connect } from 'react-redux'
-import { HIDECALCULATOR } from './Redux/action';
+import { HIDECALCULATOR, HIDEPOMODORO } from './Redux/action';
 import SmallCalculator from './calculator/smallCalculator';
+import './css/pomodoro.css'
 
 const Header = (props) => {
+    const [time, setTime] = useState({
+        hour :new Date().getHours().toLocaleString(),
+        minute: new Date().getMinutes().toLocaleString(),
+        second: new Date().getSeconds().toLocaleString()
+    })
+    const [studyTime, setStudyTime] = useState('30')
+
+    useEffect(()=>{
+        setTimeout(()=>{
+            updateTime()
+        },1000)
+    })
+
+    const updateTime = () => {
+        setTime({
+            hour :new Date().getHours().toLocaleString(),
+            minute: new Date().getMinutes().toLocaleString(),
+            second: new Date().getSeconds().toLocaleString()
+        })
+    }
 
     const calculator = () => {
         return(
@@ -22,6 +43,59 @@ const Header = (props) => {
             </div>
         )
     }
+    
+    const pomodoro = () => {
+        return(
+            <div className="pomo-main">
+            <h4 className="pomo-h4">Pomodoro Technique</h4>
+            <div className="pomo-section">
+                <p> Study Time </p>
+                <input 
+                    className="pomo-input"
+                    type="radio" 
+                    value="30"
+                    name="study"
+                    />30
+                    
+                <input
+                    className="pomo-input"
+                    type="radio" 
+                    name="study"
+                    value="40"
+                    /> 40
+                <p> Break time </p>
+                <input 
+                    className="pomo-input"
+                    type="radio" 
+                    value="5"
+                    name="break"
+                    />5
+                <input 
+                    className="pomo-input"
+                    name="break"
+                    type="radio" 
+                    value="10"
+                    />10
+                <input 
+                    className="pomo-input"
+                    name="break"
+                    type="radio"
+                    value="15"
+                    />15
+                    
+                    <br />
+                <button 
+                    className="pomo-submit"
+                    onClick={()=>{setStudyTime(30)}}
+                    >
+                Submit
+                </button>
+                <p>Pomodoro technique is studying for particular amount of time and taking a break for some time inbetween so keeping mind fresh and productive</p>
+            </div>
+        </div>
+        )
+    }
+
 
     // components 
     const SignIn = () => {
@@ -38,7 +112,7 @@ const Header = (props) => {
         return (
             !isAuthenticated() &&
                         <li className="nav-li">
-                        <Link className="nav-link" to="/signup">
+                        <Link className="nav-link"  to="/signup">
                             Sign Up
                         </Link>
                     </li>
@@ -78,6 +152,7 @@ const Header = (props) => {
             </li>
         )
     }
+
     const AddEseYear = () => {
         return(
             isAuthenticated() && 
@@ -125,11 +200,18 @@ const Header = (props) => {
                     >
                         Calculator
                     </button>
+                    <button 
+                        onClick={()=> props.hidepomodoro()}
+                        className="pomo-button">
+                    Pomodoro
+                    </button>
                 </ul>
             </nav>
             <div className="header-cal">
             {calculator()}
+            {pomodoro()}
             </div>
+            {time.hour}:{time.minute}:{time.second}
         </header>
     )
 }
@@ -142,6 +224,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         hidecalculator: ()=>dispatch({
             type: HIDECALCULATOR
+        }),
+        hidepomodoro: () => dispatch({
+            type: HIDEPOMODORO
         })
     }
 }

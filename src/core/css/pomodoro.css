@@ -1,0 +1,15 @@
+.pomo-button{
+    width: auto;
+}
+.pomo-main{
+    min-width: 200px;
+    max-width: 250px;
+    background-color: #2F363F;
+}
+.pomo-h4{
+    text-align: center;
+}
+.pomo-section{
+    text-align: center;
+    background-color: #333945;
+}

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Base from './Base';
 import './css/signinup.css';
-import {Link} from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
 import { signup } from './Backend/auth';
 
 const SignUp = () => {
@@ -14,10 +14,11 @@ const SignUp = () => {
         password2: "",
         phoneNumber: "",
         error: "",
-        success: ""
+        success: "",
+        didRedirect: false
     })
 
-    const { firstName, lastName, email, password, password2, phoneNumber, error, success } = values;
+    const { firstName, lastName, email, password, password2, phoneNumber, error, success, didRedirect } = values;
 
     const handleChange = event => {
         const { name, value } = event.target;
@@ -42,14 +43,7 @@ const SignUp = () => {
                     } else {
                         setValues({
                             ...values,
-                            firstName: "",
-                            lastName: "",
-                            email: "",
-                            password: "",
-                            password2: "",
-                            phoneNumber: "",
-                            error: "",
-                            success: true,
+                            didRedirect: true
                         })
                     }
                 })
@@ -71,6 +65,14 @@ const SignUp = () => {
                 Signup successful
             </div>
         )
+    }
+    
+    const handleRedirect = () => {
+        if(didRedirect){
+            return(
+                <Redirect to="/signin" />
+            )
+        }
     }
 
     return(
@@ -137,6 +139,7 @@ const SignUp = () => {
             </div>
             <p className="signin-p">Already have an account? <Link to="/signin" className="">Log in</Link></p>
             </div>
+            {handleRedirect()}
         </Base>
     )
 }
