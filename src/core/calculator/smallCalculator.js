@@ -1,14 +1,17 @@
 import React from 'react'
 import '../css/smallcalculator.css'
 
+import { connect } from 'react-redux'
+import { HIDECALCULATOR } from '../Redux/action'
+
 class SmallCalculator extends React.Component{
-    constructor(){
-        super()
+    constructor(props){
+        super(props)
         this.state={
             topScreen: '',
             bottomScreen: '',
             calcScreen: '',
-            currentNumber: 0
+            currentNumber: 0,
         }
         this.handleNumber = this.handleNumber.bind(this)
         this.clear = this.clear.bind(this)
@@ -92,7 +95,7 @@ class SmallCalculator extends React.Component{
     }
     render(){
         return(
-            <div className="test small-calc-main">
+            <div className="small-calc-main">
                 <div className="calc-title">
                     <div>Calculator</div>
                         <div className="close-button"
@@ -225,4 +228,17 @@ class SmallCalculator extends React.Component{
     }
 }
 
-export default SmallCalculator
+
+const mapStateToProps = (store) => {
+    return store
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return {
+        hidecalculator: ()=>dispatch({
+            type: HIDECALCULATOR
+        })
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SmallCalculator)

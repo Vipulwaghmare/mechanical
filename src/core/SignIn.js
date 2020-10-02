@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { signin, authenticate } from './Backend/auth';
 import Base from './Base';
 import './css/signinup.css';
@@ -8,10 +8,11 @@ const SignIn = () => {
     const [values, setValues ] = useState({
         email: "vipulwaghmare222@gmail.com",
         password: "12345678",
-        error: ''
+        error: '',
+        didRedirect: false
     })
 
-    const { email, password, error } = values;
+    const { email, password, error, didRedirect } = values;
 
     const handleChange = event => {
         const {name, value} = event.target
@@ -33,7 +34,8 @@ const SignIn = () => {
                 } else {
                     authenticate(data, ()=>{
                         setValues({
-                            ...values
+                            ...values,
+                            didRedirect: true,
                         })
                     })
                 }
@@ -47,6 +49,14 @@ const SignIn = () => {
         return(
             error && <div className="errorMessage">{error}</div>
         )
+    }
+
+    const handleRedirect = () => {
+        if(didRedirect){
+            return(
+                <Redirect to="/" />
+            )
+        }
     }
 
     return(
@@ -83,6 +93,7 @@ const SignIn = () => {
         </div>
         <p className="signin-p">Don't have an account yet? <Link to="/signup" className="">Sign up</Link></p>
         </div>
+        {handleRedirect()}
         </Base>
     )
 }

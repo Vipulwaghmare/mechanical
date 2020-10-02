@@ -7,7 +7,7 @@ import Notes from './Notes';
 const SyllabusHome = () => {
     return(
         <SyllabusBase>
-            <Notes />
+            Syllabus Home
         </SyllabusBase>
     )
 }

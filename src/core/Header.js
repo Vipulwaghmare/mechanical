@@ -49,7 +49,7 @@ const Header = (props) => {
         return (
             isAuthenticated() && 
                         <li className="nav-li">
-                        <Link to="/" className="nav-link"
+                        <Link to="/signin" className="nav-link"
                             onClick={()=>{signout(()=>{})}} >
                             Sign Out
                         </Link>

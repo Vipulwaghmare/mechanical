@@ -1,7 +1,7 @@
 import { HIDECALCULATOR } from './action'
 
 const initState = {
-    hide_calculator: false,
+    hide_calculator: true,
 }
 
 export const rootReducer = ( state = initState, action) => {

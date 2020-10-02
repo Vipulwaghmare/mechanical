@@ -5,6 +5,7 @@ const Notes= () => {
     return(
         <div>
             <StressAndStrain />
+            Notes
         </div>
     )
 }

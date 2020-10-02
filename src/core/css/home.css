@@ -1,0 +1,29 @@
+.home-title-div{
+    text-align: center;
+    padding: 4em 0;
+    background-color: #0A3D62;
+}
+.home-title-h2{
+    color: #74B9FF;
+}
+.home-title-h3{
+    color: white;
+    margin-top: 0.5em;
+    font-weight: 200;
+    margin-bottom: 1em;
+}
+.home-title-button{
+    width: 7em;
+    padding: 0.5em;
+    height: auto;
+    font-weight: 400;
+    border: 0px;
+    border-radius: 0;
+    background-color: #1287A5;
+    color: #EAF0F1;
+    margin: 0 0.5em;
+}
+.home-title-button:hover{
+    background-color: #01CBC6;
+    color: #2B2B52;
+}
