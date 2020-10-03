@@ -4,12 +4,42 @@
 .pomo-main{
     min-width: 200px;
     max-width: 250px;
-    background-color: #2F363F;
+    background-color:#218F76;
+    border: 1.5px solid black;
 }
 .pomo-h4{
     text-align: center;
 }
+.pomo-close{
+    background-color: red;
+    position: absolute;
+    right: 5px;
+    top: 2px;
+    width: 16px;
+    text-align: center;
+    cursor: pointer;
+}
+.pomo-title{
+    margin-top: 3px;
+}
 .pomo-section{
     text-align: center;
-    background-color: #333945;
+    background-color: #53E0BC;
+    color: black;
+}
+.pomo-submit{
+    background-color: blanchedalmond;
+    border: 0px;
+    margin: 0.5em 0;
+}
+.pomo-input{
+    margin-right: 3px;
+    margin-top: 5px;
+}
+.pomo-input + .pomo-input{
+    margin-left: 1em;
+}
+.pomo-submit:hover{
+    background-color:#25CCF7;
+    border: 1px solid blueviolet;
 }

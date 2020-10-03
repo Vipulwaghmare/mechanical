@@ -10,16 +10,25 @@ import './css/pomodoro.css'
 
 const Header = (props) => {
     const [time, setTime] = useState({
-        hour :new Date().getHours().toLocaleString(),
-        minute: new Date().getMinutes().toLocaleString(),
-        second: new Date().getSeconds().toLocaleString()
+        date: new Date(),
+        hour :new Date().getHours(),
+        minute: new Date().getMinutes(),
+        second: new Date().getSeconds()
     })
     const [studyTime, setStudyTime] = useState('30')
+    const [breakTime, setBreakTime] = useState('10')
+    const [timeToBreak, setTimeToBreak] = useState(0)
 
     useEffect(()=>{
         setTimeout(()=>{
             updateTime()
         },1000)
+        if(time.minute == timeToBreak){
+            alert(`You have studied for ${studyTime} minutes, 
+            Take a break of ${breakTime} minutes and come back with fresh mind
+            `)
+            setTimeToBreak(61)
+        }
     })
 
     const updateTime = () => {
@@ -44,41 +53,71 @@ const Header = (props) => {
         )
     }
     
+    const handlePomoChange = (e) => {
+        if(e.target.name === "study"){
+            setStudyTime(e.target.value)
+        }
+        if(e.target.name === "break"){
+            setBreakTime(e.target.value)
+        }
+    }
+
+    const handlePomoSubmit = e => {
+        e.preventDefault()
+        let x = parseInt(time.minute)+ parseInt(studyTime)
+        if(x< 60){
+            setTimeToBreak(x)
+        } else {
+            setTimeToBreak(x - 60)
+        }
+    }
+
     const pomodoro = () => {
         return(
+            !props.hide_pomodoro &&
             <div className="pomo-main">
             <h4 className="pomo-h4">Pomodoro Technique</h4>
+            <span className="pomo-close"
+                onClick={()=>props.hidepomodoro()}
+            >x</span>
             <div className="pomo-section">
-                <p> Study Time </p>
+                <p className="pomo-title"> Study Time (min)</p>
                 <input 
                     className="pomo-input"
                     type="radio" 
-                    value="30"
+                    value="01"
+                    onChange={handlePomoChange}
                     name="study"
+                    defaultChecked
                     />30
                     
                 <input
                     className="pomo-input"
                     type="radio" 
+                    onChange={handlePomoChange}
                     name="study"
                     value="40"
                     /> 40
-                <p> Break time </p>
+                <p className="pomo-title"> Break time (min)</p>
                 <input 
                     className="pomo-input"
                     type="radio" 
+                    onChange={handlePomoChange}
                     value="5"
                     name="break"
                     />5
                 <input 
                     className="pomo-input"
                     name="break"
+                    onChange={handlePomoChange}
                     type="radio" 
                     value="10"
+                    defaultChecked
                     />10
                 <input 
                     className="pomo-input"
                     name="break"
+                    onChange={handlePomoChange}
                     type="radio"
                     value="15"
                     />15
@@ -86,7 +125,7 @@ const Header = (props) => {
                     <br />
                 <button 
                     className="pomo-submit"
-                    onClick={()=>{setStudyTime(30)}}
+                    onClick={handlePomoSubmit}
                     >
                 Submit
                 </button>
