@@ -7,3 +7,16 @@ export const getAllSubjects = () => {
         return response.json()
     }).catch(error=> console.log(error))
 }
+
+export const subtopicArray = async () => {
+    // Returns all subtopics added in an array
+    let list = []
+    let p = await getAllSubjects()
+    let q = await p.map(r=>(r.subtopics));
+    let r = await q.map(x => {
+        list.push(...x)
+    })
+    console.log("MEH", q)
+    return list
+}
+// subtopicArray()

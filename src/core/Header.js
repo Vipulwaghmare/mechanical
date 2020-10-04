@@ -17,17 +17,17 @@ const Header = (props) => {
     })
     const [studyTime, setStudyTime] = useState('30')
     const [breakTime, setBreakTime] = useState('10')
-    const [timeToBreak, setTimeToBreak] = useState(0)
+    const [timeToBreak, setTimeToBreak] = useState(61)
 
     useEffect(()=>{
         setTimeout(()=>{
             updateTime()
         },1000)
         if(time.minute == timeToBreak){
+            setTimeToBreak(61)
             alert(`You have studied for ${studyTime} minutes, 
             Take a break of ${breakTime} minutes and come back with fresh mind
             `)
-            setTimeToBreak(61)
         }
     })
 
@@ -203,6 +203,17 @@ const Header = (props) => {
         )
     }
 
+    const AddQuestion = () => {
+        return(
+            isAuthenticated() && 
+            <li className="nav-li">
+                    <Link className="nav-link" to="/addQuestion">
+                        Add Question
+                    </Link>
+            </li>
+        )
+    }
+
     return(
         <header className="header">
             <div className="header-title">
@@ -233,6 +244,7 @@ const Header = (props) => {
                     <AddSubject />
                     <AddGateYear />
                     <AddEseYear />
+                    <AddQuestion />
                     <button 
                         onClick={()=>props.hidecalculator()}
                         className="calc-button"

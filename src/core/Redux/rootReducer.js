@@ -1,8 +1,8 @@
-import { HIDECALCULATOR, HIDEPOMODORO } from './action'
+import { HIDECALCULATOR, HIDEPOMODORO} from './action'
 
 const initState = {
     hide_calculator: true,
-    hide_pomodoro : true
+    hide_pomodoro : true,
 }
 
 export const rootReducer = ( state = initState, action) => {

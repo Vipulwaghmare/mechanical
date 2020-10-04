@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
+
 import { getYears } from './backend/getpaperlist';
 
 const Subjects= () => {
@@ -22,11 +23,12 @@ const Subjects= () => {
     const MainYear = (props) => {
         return(
             <div className="subject-name">
-                <b>{props.year}</b>
+                <Link to={`/gate/${props.year}`} >
+                    <b>{props.year}</b>
+                </Link>
             </div>
         )
     }
-    console.log(years)
 
     return(
         <div className="subject-topics">

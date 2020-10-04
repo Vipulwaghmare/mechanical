@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 // Importing Components
@@ -11,9 +11,9 @@ import SyllabusHome from './core/Syllabus/SyllabusHome';
 import AddSubjects from './core/Admin/addSubjects';
 import AddGate from './core/Admin/addGate';
 import AddEse from './core/Admin/addEse';
+import AddQuestion from './core/Admin/addQuestion';
 
 const Routes = () => {
-
     return(
         <BrowserRouter>
             <Switch>
@@ -26,6 +26,7 @@ const Routes = () => {
                 <Route path="/addsubject" exact component={AddSubjects} />
                 <Route path="/addgate" exact component={AddGate} />
                 <Route path="/addEse" exact component={AddEse} />
+                <Route path="/addQuestion" exact component={AddQuestion} />
             </Switch>
         </BrowserRouter>
     )

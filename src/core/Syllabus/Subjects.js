@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import { getAllSubjects } from './backend/getallsubjects';
 
-const Subjects= () => {
+const Subjects= (props) => {
     const [subjects, setSubjects] = useState([])
     const [error, setError ] = useState(false)
     const [showSubtopic, setShowSubtopic ] = useState(false)
@@ -22,6 +22,7 @@ const Subjects= () => {
         subjectList()
     },[])
 
+
     const SubTopics = (props) => {
         return( showSubtopic && currentSubject === props.name && 
             <div className="subject-subtopic">
@@ -40,6 +41,7 @@ const Subjects= () => {
         return(
             <div className="subject-name">
                 <b onClick={()=>{
+
                     setShowSubtopic(true)
                     setCurrentSubject(props.name)
                     }}>{props.name}</b>

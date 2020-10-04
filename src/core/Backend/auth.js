@@ -24,7 +24,6 @@ export const signin = user => {
         },
         body: JSON.stringify(user)
     }).then(response=> {
-        console.log("signin successful")
         return response.json()
     }).catch(error=>{
         console.log(error)
