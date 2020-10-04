@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState} from 'react';
 import { API } from '../../backend';
 import Base from '../Base';
 
@@ -22,7 +22,6 @@ const AddQuestion = () => {
     const { question, a, b, c, d, correct_option, ans, error, success, formData } = values;
 
     const handleChange = event => {
-        console.log(event.target)
         let { name, value } = event.target;
         if(event.name === "photo" || event.name === "answerPhoto"){
             value = event.target.files[0]
@@ -30,19 +29,18 @@ const AddQuestion = () => {
         formData.set(name, value)
         setValues({
             ...values,
-            [name] : value
+            [name] : value,
+            error: '',
         })
-        console.log(formData)
     }
 
     const addquestion = (quest) => {
         return fetch(`${API}/addquestion`,{
             method: "POST",
             headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json"
+                Accept: "application/json"
             },
-            body: JSON.stringify(quest)
+            body: quest
         })
         .then(response => {
             return response.json()
@@ -109,6 +107,7 @@ const AddQuestion = () => {
                 <input 
                     type="file" 
                     name= "photo"
+                    accept="image"
                     className="signin-input"
                     placeholder="Question Photo"
                     onChange={handleChange}
@@ -164,6 +163,7 @@ const AddQuestion = () => {
                 <input 
                     type="file" 
                     name= "answerPhoto"
+                    accept="image"
                     className="signin-input"
                     placeholder="Answer Photo"
                     onChange={handleChange}
