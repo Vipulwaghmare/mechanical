@@ -1,6 +1,9 @@
-import React, { useState} from 'react';
+import React, { useState, useEffect} from 'react';
 import { API } from '../../backend';
+import { getEseYears } from '../Backend/ese';
+import { getGateYears } from '../Backend/gate';
 import Base from '../Base';
+import '../css/addQuestion.css'
 
 const AddQuestion = () => {
 
@@ -14,13 +17,31 @@ const AddQuestion = () => {
         ans: '',
         photo: '',
         answerPhoto: '',
+        gateYear: '', // to store selected value
+        eseYear: '', // to store selected value
+        gateYears: [], // to store all year list
+        eseYears: [], // to store all year list
+        allGateYears: [], // imported from db to select
+        allEseYears: [], // imported from db to select
         error: '',
         success: '',
         formData: new FormData()
     })
 
-    const { question, a, b, c, d, correct_option, ans, error, success, formData } = values;
+    // destructing values for ease
+    const { question, a, b, c, d, correct_option, ans, gateYear, eseYear, gateYears, eseYears, error, success, formData, allGateYears, allEseYears } = values;
 
+    // saving years for selection
+    useEffect(()=>{
+        getGateYears().then(data => {
+            data.map(x => allGateYears.push(x))
+        })
+        getEseYears().then(data=> {
+            data.map(x => allEseYears.push(x))
+        })
+    },[])
+
+    // Input change
     const handleChange = event => {
         let { name, value } = event.target;
         if(event.name === "photo" || event.name === "answerPhoto"){
@@ -32,6 +53,26 @@ const AddQuestion = () => {
             [name] : value,
             error: '',
         })
+    }
+
+    const handleGateYears = (e) =>{
+        e.preventDefault()
+        if(gateYears.indexOf(gateYear) === -1){
+            gateYears.push(gateYear)
+            setValues({...values, gateYear:'', success: "Gate Year Added"})
+        }
+    }
+
+    const handleEseYears = (e) => {
+        e.preventDefault()
+        if(eseYears.indexOf(eseYear) === -1 ){
+            eseYears.push(eseYear)
+            setValues({
+                ...values,
+                eseYear: "",
+                success: "Ese year added"
+            })
+        }
     }
 
     const addquestion = (quest) => {
@@ -112,6 +153,54 @@ const AddQuestion = () => {
                     placeholder="Question Photo"
                     onChange={handleChange}
                 ></input>
+
+                <div className="add-year">
+                Add Gate Year: 
+                {gateYear}
+                <select
+                    name="gateYear"
+                    onChange={handleChange}
+                    placeholder="Gate Years"
+                    >
+                    <option>Select</option>
+                        {allGateYears &&
+                        allGateYears.map(gate => (
+                        <option     
+                            key={gate._id} 
+                            value={gate.year}>
+                        {gate.year}
+                    </option>
+                    ))}
+                </select>
+                <button onClick={handleGateYears}>
+                Add
+                </button>
+                </div>
+                <div className="add-year">
+                Add ESE year:
+                {eseYear}
+                <select
+                    name="eseYear"
+                    onChange={handleChange}
+                    placeholder="Ese Years"
+                    >
+                    <option>Select</option>
+                        {allEseYears &&
+                        allEseYears.map(ese => (
+                        <option 
+                            key={ese._id} 
+                            value={ese.year}>
+                        {ese.year}
+                    </option>
+                    ))}
+                </select>
+                <button
+                    onClick={handleEseYears}
+                    >
+                Add
+                </button>
+                </div>
+                
                 <input 
                     type="text" 
                     name= "a"
